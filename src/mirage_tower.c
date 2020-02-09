@@ -1,5 +1,5 @@
 #include "global.h"
-#include "alloc.h"
+#include "malloc.h"
 #include "bg.h"
 #include "event_data.h"
 #include "event_object_movement.h"
@@ -139,10 +139,10 @@ static const union AnimCmd gSpriteAnim_8617DEC[] =
 static const struct OamData gOamData_8617DF4 =
 {
     .y = 0,
-    .affineMode = 0,
-    .objMode = 0,
+    .affineMode = ST_OAM_AFFINE_OFF,
+    .objMode = ST_OAM_OBJ_NORMAL,
     .mosaic = 0,
-    .bpp = 0,
+    .bpp = ST_OAM_4BPP,
     .shape = SPRITE_SHAPE(16x16),
     .x = 0,
     .matrixNum = 0,
@@ -258,7 +258,7 @@ EWRAM_DATA static struct Struct203CF10 *sUnknown_0203CF10 = NULL;
 EWRAM_DATA static struct BgRegOffsets *sBgShakeOffsets = NULL;
 EWRAM_DATA struct MirageTowerPulseBlend *sMirageTowerPulseBlend = NULL;
 
-IWRAM_DATA static u16 gUnknown_030012A8[8];
+static u16 gUnknown_030012A8[8];
 
 bool8 IsMirageTowerVisible(void)
 {
@@ -318,7 +318,7 @@ void SetMirageTowerVisibility(void)
     u16 rand;
     bool8 visible;
 
-    if (VarGet(VAR_ROUTE_111_STATE))
+    if (VarGet(VAR_MIRAGE_TOWER_STATE))
     {
         FlagClear(FLAG_MIRAGE_TOWER_VISIBLE);
         return;
